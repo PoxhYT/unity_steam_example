@@ -51,8 +51,8 @@ public class LobbyController : MonoBehaviour
     {
         if (!CreatedItem) CreateHostPlayerItem();
         if (Items.Count < GetCustomNetworkManager.Players.Count) CreateClientPlayerItem();
-        if (Items.Count < GetCustomNetworkManager.Players.Count) RemovePlayerItem();
-        if (Items.Count < GetCustomNetworkManager.Players.Count) UpdatePlayerItem();
+        if (Items.Count > GetCustomNetworkManager.Players.Count) RemovePlayerItem();
+        if (Items.Count == GetCustomNetworkManager.Players.Count) UpdatePlayerItem();
     }
 
     public void FindPlayer()
@@ -64,6 +64,7 @@ public class LobbyController : MonoBehaviour
 
     public void CreateHostPlayerItem()
     {
+        print(12);
         foreach(PlayerObjectController player in GetCustomNetworkManager.Players)
         {
             GameObject NewPlayerItem = Instantiate(PlayerListItem) as GameObject;
@@ -84,6 +85,7 @@ public class LobbyController : MonoBehaviour
     
     public void CreateClientPlayerItem()
     {
+        print(1);
         foreach (PlayerObjectController player in GetCustomNetworkManager.Players)
         {
             if(!Items.Any(target => target.ConnectionID == player.ConnectionID))
