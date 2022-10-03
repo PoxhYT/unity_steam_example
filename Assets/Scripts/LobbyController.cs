@@ -76,7 +76,7 @@ public class LobbyController : MonoBehaviour
             Item.SetPlayerData();
 
             NewPlayerItem.transform.SetParent(PlayerListViewContent.transform);
-            NewPlayerItem.transform.localScale = Vector3.one;
+            NewPlayerItem.transform.localScale = Vector2.one;
 
             Items.Add(Item);
         }
