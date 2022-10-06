@@ -34,7 +34,7 @@ public class LobbyListManager : MonoBehaviour
             {
                 GameObject CreatedItem = Instantiate(LobbyDataItem);
                 CreatedItem.GetComponent<LobbyDataEntry>().LobbyID = (CSteamID)lobby.m_SteamID;
-                CreatedItem.GetComponent<LobbyDataEntry>().LobbyName = SteamMatchmaking.GetLobbyData((CSteamID)lobby.m_SteamID, "name");
+                CreatedItem.GetComponent<LobbyDataEntry>().LobbyName = SteamMatchmaking.GetLobbyData((CSteamID)lobby.m_SteamID, "name") + " | " + (CSteamID)lobby.m_SteamID;
                 CreatedItem.GetComponent<LobbyDataEntry>().SetLobbyData();
                 CreatedItem.transform.SetParent(LobbyListContent.transform);
                 CreatedItem.transform.localPosition = Vector3.one;

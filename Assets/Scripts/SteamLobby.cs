@@ -45,7 +45,7 @@ public class SteamLobby : MonoBehaviour
         Debug.Log("Lobby created succesfully");
         Manager.StartHost();
         SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey, SteamUser.GetSteamID().ToString());
-        SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name", SteamFriends.GetPersonaName().ToString() + "'s Lobby");
+        SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name", SteamFriends.GetPersonaName().ToString() + "'s Lobby - STB - " + new CSteamID(callback.m_ulSteamIDLobby));
     }
 
     void OnJoinReuest(GameLobbyJoinRequested_t callback)
