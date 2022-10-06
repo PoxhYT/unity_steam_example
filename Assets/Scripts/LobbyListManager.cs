@@ -1,5 +1,6 @@
 using Steamworks;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LobbyListManager : MonoBehaviour
@@ -36,7 +37,8 @@ public class LobbyListManager : MonoBehaviour
                 CreatedItem.GetComponent<LobbyDataEntry>().LobbyID = (CSteamID)lobby.m_SteamID;
 
                 string LobbyName = SteamMatchmaking.GetLobbyData((CSteamID)lobby.m_SteamID, "name");
-                if(LobbyName.Contains("STB"))
+                var results = lobbies.Where(lobby => lobby.GetComponent<LobbyDataEntry>().LobbyName == LobbyName);
+                if (LobbyName.Contains("STB") && results.Count() < 1)
                 {
                     CreatedItem.GetComponent<LobbyDataEntry>().LobbyName = LobbyName;
                     CreatedItem.GetComponent<LobbyDataEntry>().SetLobbyData();
