@@ -38,8 +38,7 @@ public class LobbyListManager : MonoBehaviour
 
                 string LobbyName = SteamMatchmaking.GetLobbyData((CSteamID)lobby.m_SteamID, "name");
                 string LobbyType = SteamMatchmaking.GetLobbyData((CSteamID)lobby.m_SteamID, "type");
-                print(LobbyType);
-
+                if (LobbyType != "k_ELobbyTypePublic") continue;
                 var results = lobbies.Where(lobby => lobby.GetComponent<LobbyDataEntry>().LobbyName == LobbyName);
                 /*if (LobbyName.Contains("STB") && results.Count() < 1)*/
                 CreatedItem.GetComponent<LobbyDataEntry>().LobbyName = LobbyName;
