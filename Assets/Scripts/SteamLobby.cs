@@ -18,6 +18,11 @@ public class SteamLobby : MonoBehaviour
     protected Callback<LobbyDataUpdate_t> LobbyDataUpdated;
     public List<CSteamID> LobbyIDs = new List<CSteamID>();
 
+    [SerializeField] TMP_Text LobbyType;
+    [SerializeField] TMP_Text LobbyName;
+    [SerializeField] GameObject LobbyCreation;
+    [SerializeField] GameObject MainButtons;
+
     public ulong CurrentLobbyID;
     private const string HostAddressKey = "HostAddress";
     CustomNetworkManager Manager;
@@ -36,9 +41,26 @@ public class SteamLobby : MonoBehaviour
         LobbyDataUpdated = Callback<LobbyDataUpdate_t>.Create(OnGetLobbyData);
     }
 
+    public void OpenLobbyCreation()
+    {
+        MainButtons.SetActive(false);
+        LobbyCreation.SetActive(true);
+    }
+
     public void HostLobby()
     {
-        SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, Manager.maxConnections);
+        ELobbyType ELobbyType;
+        switch(LobbyType.text)
+        {
+            case "Friends only":
+                ELobbyType = ELobbyType.k_ELobbyTypeFriendsOnly;
+                break;
+            default:
+                ELobbyType = ELobbyType.k_ELobbyTypePublic;
+                break;
+
+        }
+        SteamMatchmaking.CreateLobby(ELobbyType, Manager.maxConnections);
     }
 
     void OnLobbyCreated(LobbyCreated_t callback)
@@ -47,7 +69,7 @@ public class SteamLobby : MonoBehaviour
         Debug.Log("Lobby created succesfully");
         Manager.StartHost();
         SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey, SteamUser.GetSteamID().ToString());
-        SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name", SteamFriends.GetPersonaName().ToString() + "'s Lobby - STB");
+        SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name", LobbyName.text);
         SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "type", ELobbyType.k_ELobbyTypePublic.ToString());
 
         print(SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "type"));
