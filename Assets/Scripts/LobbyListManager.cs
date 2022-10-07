@@ -47,6 +47,9 @@ public class LobbyListManager : MonoBehaviour
                     CreatedItem.transform.SetParent(LobbyListContent.transform);
                     CreatedItem.transform.localPosition = Vector3.one;
                     lobbies.Add(CreatedItem);
+                } else
+                {
+                    Destroy(CreatedItem);
                 }
             }
         }
