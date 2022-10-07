@@ -37,18 +37,16 @@ public class LobbyListManager : MonoBehaviour
                 CreatedItem.GetComponent<LobbyDataEntry>().LobbyID = (CSteamID)lobby.m_SteamID;
 
                 string LobbyName = SteamMatchmaking.GetLobbyData((CSteamID)lobby.m_SteamID, "name");
+                string LobbyType = SteamMatchmaking.GetLobbyData((CSteamID)lobby.m_SteamID, "type");
+                print(LobbyType);
+
                 var results = lobbies.Where(lobby => lobby.GetComponent<LobbyDataEntry>().LobbyName == LobbyName);
-                if (LobbyName.Contains("STB") && results.Count() < 1)
-                {
-                    CreatedItem.GetComponent<LobbyDataEntry>().LobbyName = LobbyName;
-                    CreatedItem.GetComponent<LobbyDataEntry>().SetLobbyData();
-                    CreatedItem.transform.SetParent(LobbyListContent.transform);
-                    CreatedItem.transform.localPosition = Vector3.one;
-                    lobbies.Add(CreatedItem);
-                }  else
-                {
-                    Destroy(CreatedItem);
-                }
+                /*if (LobbyName.Contains("STB") && results.Count() < 1)*/
+                CreatedItem.GetComponent<LobbyDataEntry>().LobbyName = LobbyName;
+                CreatedItem.GetComponent<LobbyDataEntry>().SetLobbyData();
+                CreatedItem.transform.SetParent(LobbyListContent.transform);
+                CreatedItem.transform.localPosition = Vector3.one;
+                lobbies.Add(CreatedItem);
             }
         }
     }

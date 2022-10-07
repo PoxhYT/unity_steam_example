@@ -8,6 +8,8 @@ public class SteamLobby : MonoBehaviour
 {
     public static SteamLobby Instance;
 
+    [SerializeField] GameObject notification;
+
     protected Callback<LobbyCreated_t> LobbyCreated;
     protected Callback<GameLobbyJoinRequested_t> JoinRequest;
     protected Callback<LobbyEnter_t> LobbyEntered;
@@ -22,7 +24,7 @@ public class SteamLobby : MonoBehaviour
 
     private void Start()
     {
-        if (!SteamManager.Initialized) { Debug.Log("Steam is not open!"); return; }
+        if (!SteamManager.Initialized) { Debug.Log("Steam is not open!"); notification.SetActive(true); return; }
         if(Instance == null) { Instance = this; }
         Manager = GetComponent<CustomNetworkManager>();
 
@@ -46,6 +48,9 @@ public class SteamLobby : MonoBehaviour
         Manager.StartHost();
         SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey, SteamUser.GetSteamID().ToString());
         SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name", SteamFriends.GetPersonaName().ToString() + "'s Lobby - STB");
+        SteamMatchmaking.SetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "type", ELobbyType.k_ELobbyTypePublic.ToString());
+
+        print(SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "type"));
     }
 
     void OnJoinReuest(GameLobbyJoinRequested_t callback)
