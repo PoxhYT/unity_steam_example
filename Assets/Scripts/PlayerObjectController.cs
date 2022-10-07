@@ -29,7 +29,6 @@ public class PlayerObjectController : NetworkBehaviour
     public override void OnStartAuthority()
     {
         CommandSetPlayerName(SteamFriends.GetPersonaName().ToString());
-        Debug.Log(SteamFriends.GetPersonaName().ToString());
         gameObject.name = "LocalPlayer";
         LobbyController.Instance.FindPlayer();
         LobbyController.Instance.UpdateLobbyName();
@@ -44,6 +43,7 @@ public class PlayerObjectController : NetworkBehaviour
 
     public override void OnStopClient()
     {
+        print("PLAYER LEFT THE GAME");
         GetCustomNetworkManager.Players.Remove(this);
         LobbyController.Instance.UpdatePlayerList();
     }
